@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ScoutX Control Panel</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    .btn {
+      padding: 15px 25px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .stream {
+      margin-top: 20px;
+      border: 2px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h2>ScoutX Control Panel</h2>
+  
+  <!-- Camera stream (if available) -->
+  <div>
+    <img class="stream" src="http://192.168.1.100:81/stream" alt="Camera Stream" width="320" height="240">
+  </div>
+  
+  <!-- Movement control buttons -->
+  <div>
+    <button class="btn" onclick="sendCommand('FORWARD')">Forward</button>
+  </div>
+  <div>
+    <button class="btn" onclick="sendCommand('LEFT')">Left</button>
+    <button class="btn" onclick="sendCommand('STOP')">Stop</button>
+    <button class="btn" onclick="sendCommand('RIGHT')">Right</button>
+  </div>
+  <div>
+    <button class="btn" onclick="sendCommand('BACKWARD')">Backward</button>
+  </div>
+
+  <script>
+    function sendCommand(direction) {
+      fetch(`/move?dir=${direction}`)
+        .then(response => response.text())
+        .then(data => {
+          console.log("Command sent: " + direction);
+          console.log("Server response: " + data);
+        })
+        .catch(err => {
+          console.error("Error:", err);
+        });
+    }
+  </script>
+</body>
+</html>
