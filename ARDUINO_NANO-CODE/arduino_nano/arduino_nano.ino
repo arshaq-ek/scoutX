@@ -16,7 +16,7 @@ Servo myServo;
 
 void setup() {
   Serial.begin(115200);  // Debugging
-  Serial2.begin(115200); // Communication with ESP32
+  Serial1.begin(115200); // Communication with HC-05
 
   pinMode(leftMotorPWM, OUTPUT);
   pinMode(leftMotorDir1, OUTPUT);
@@ -33,10 +33,10 @@ void setup() {
 }
 
 void loop() {
-  if (Serial2.available()) {
-    String command = Serial2.readStringUntil('\n');
+  if (Serial1.available()) {
+    String command = Serial1.readStringUntil('\n');
     command.trim();
-    Serial.println("Received from ESP32: " + command);
+    Serial.println("Received from HC-05: " + command);
 
     if (command == "FORWARD") moveForward();
     else if (command == "BACKWARD") moveBackward();
